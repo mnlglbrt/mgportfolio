@@ -31,19 +31,11 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-
-
-
-
-
-
-
-
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle white = TextStyle(color:Colors.white);
   String screenType;
   Size screenSize;
-  int language=1;
+  int language=0;
   PageController _controller = PageController(initialPage: 0,);
 
   @override
@@ -72,8 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
       "frenchEnglish":<String>["French : native           English : fluent","Francais : natif           Anglais : courant"],
       "spanish":<String>["Spanish: B2","Espagnol: B2"],
       "talk":<String>["Lets talk :","Contactez moi :"]
-
-
     };
 
 
@@ -165,7 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-
     Widget trips=ClayContainer(
       width: 400,
       color: Colors.grey[900],
@@ -219,159 +208,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-Widget page1=Scaffold(
-  body: Container(
-    height: screenSize.height,
-    width: screenSize.width,
-    color: Colors.grey[900],
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        ///Header
-        Flexible(flex: 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top:0.0,left:40),
-                child: Text('manuelguilbert',style:white),
-              ),
 
 
 
 
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Row(
-                  children: <Widget>[
-                    Text(strings["find"][language],style:white),
-                    SizedBox(height: 40,
-                      child: Image.asset('images/playstore.png',),)
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        ///Body
-        Flexible(flex:12,
-          child: SingleChildScrollView(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Center(child:Column(
-                  children:(screenType=='small'||screenType=='medium')? <Widget>[
-                    hello,
-                    SizedBox(height: 20,),
-                    gitHub,
-                    SizedBox(height: 20,),
-                    techs,
-                    SizedBox(height: 20,),
-                    trips,
-                    SizedBox(height: 20,),
-                    contact,
-                  ]
-                      :
-                  <Widget>[
-                    Row(mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Column(children: <Widget>[
-                          hello,
-                          SizedBox(height: 30,),
-                          trips
-                        ],),
-                        SizedBox(width: 30,),
-                        Column(children: <Widget>[
-                          gitHub,
-                          SizedBox(height: 30,),
-                          techs,
-                          SizedBox(height: 30,),
-                          contact,
-                        ],
-
-                        )
-                      ],)
-
-                  ],
-                )),
-              ),
-            ),
-          ),
-        ),
-
-        ///Footer
-        Flexible(flex:2,
-          child: Stack(
-            children: <Widget>[
-              Positioned(right: 20,bottom: 20,
-                child:_languageItemPopup() ,),
-              Positioned(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text('Lille, France',style:white),
-                        Row(
-                          children: <Widget>[
-                            FlatButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(100.0),
-                              ),
-                              color:Colors.transparent,
-                              hoverColor: Colors.grey[850],
-                              onPressed:() {//goGithHub
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Image.asset('images/github.png',height: 40,),
-                              ),
-                            ),
-                            FlatButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(100.0),
-                              ),
-                              color:Colors.transparent,
-                              hoverColor: Colors.grey[850],
-                              onPressed:() {//goLinkedIn
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Image.asset('images/500px.png',height: 40,),
-                              ),
-                            ),
-                            FlatButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(100.0),
-                              ),
-                              color:Colors.transparent,
-                              hoverColor: Colors.grey[850],
-                              onPressed:() {//goDribbble
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Image.asset('images/dribbble.png',height: 40,),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  ),
-);
-    Widget page2=Scaffold(
+    return Scaffold(
       body: Container(
         height: screenSize.height,
         width: screenSize.width,
-        color: Colors.grey[100],
+        color: Colors.grey[900],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -403,47 +248,93 @@ Widget page1=Scaffold(
             ),
             ///Body
             Flexible(flex:12,
-              child: SingleChildScrollView(
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Center(child:Column(
-                      children:(screenType=='small'||screenType=='medium')? <Widget>[
-                        hello,
-                        SizedBox(height: 20,),
-                        gitHub,
-                        SizedBox(height: 20,),
-                        techs,
-                        SizedBox(height: 20,),
-                        trips,
-                        SizedBox(height: 20,),
-                        contact,
-                      ]
-                          :
-                      <Widget>[
-                        Row(mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Column(children: <Widget>[
-                              hello,
-                              SizedBox(height: 30,),
-                              trips
-                            ],),
-                            SizedBox(width: 30,),
-                            Column(children: <Widget>[
-                              gitHub,
-                              SizedBox(height: 30,),
-                              techs,
-                              SizedBox(height: 30,),
-                              contact,
-                            ],
+              child: PageView(controller: _controller,
+                children: <Widget>[
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Center(child:Column(
+                          children:(screenType=='small'||screenType=='medium')? <Widget>[
+                            hello,
+                            SizedBox(height: 20,),
+                            gitHub,
+                            SizedBox(height: 20,),
+                            techs,
+                            SizedBox(height: 20,),
+                            trips,
+                            SizedBox(height: 20,),
+                            contact,
+                          ]
+                              :
+                          <Widget>[
+                            Row(mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(children: <Widget>[
+                                  hello,
+                                  SizedBox(height: 30,),
+                                  trips
+                                ],),
+                                SizedBox(width: 30,),
+                                Column(children: <Widget>[
+                                  gitHub,
+                                  SizedBox(height: 30,),
+                                  techs,
+                                  SizedBox(height: 30,),
+                                  contact,
+                                ],
 
-                            )
-                          ],)
+                                )
+                              ],)
 
-                      ],
-                    )),
-                  ),
-                ),
+                          ],
+                        )),
+                      ),
+                    ),
+                  ),//Page1
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(child:Column(
+                          children:(screenType=='small'||screenType=='medium')? <Widget>[
+                            hello,
+                            SizedBox(height: 20,),
+                            gitHub,
+                            SizedBox(height: 20,),
+                            techs,
+                            SizedBox(height: 20,),
+                            trips,
+                            SizedBox(height: 20,),
+                            contact,
+                          ]
+                              :
+                          <Widget>[
+                            Row(mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(children: <Widget>[
+                                  hello,
+                                  SizedBox(height: 30,),
+                                  trips
+                                ],),
+                                SizedBox(width: 30,),
+                                Column(children: <Widget>[
+                                  gitHub,
+                                  SizedBox(height: 30,),
+                                  techs,
+                                  SizedBox(height: 30,),
+                                  contact,
+                                ],
+
+                                )
+                              ],)
+
+                          ],
+                        )),
+                      ),
+                    ),
+                  ),//Page2
+                ],
               ),
             ),
 
@@ -501,6 +392,19 @@ Widget page1=Scaffold(
                                     child: Image.asset('images/dribbble.png',height: 40,),
                                   ),
                                 ),
+                                FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: new BorderRadius.circular(100.0),
+                                  ),
+                                  color:Colors.transparent,
+                                  hoverColor: Colors.grey[850],
+                                  onPressed:() {//goPlaystore
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset('images/playstore.png',height: 40,),
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -515,14 +419,6 @@ Widget page1=Scaffold(
         ),
       ),
     );
-
-    return PageView(
-      controller: _controller,
-      children: [
-        page1,
-        page2,
-      ],
-    );;
   }
 
   Widget _languageItemPopup() => PopupMenuButton(
