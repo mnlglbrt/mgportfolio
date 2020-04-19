@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Size screenSize;
   int language=0;
   PageController _controller = PageController(initialPage: 0,);
+  int page=0;
 
   @override
   void dispose() {
@@ -118,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Image.asset('images/github.png',height: 20,),
                       Text(' GitHub',style: white),
                     ],
-                  ),onPressed: (){_controller.animateToPage(2, duration: Duration(seconds: 2), curve: Curves.easeIn);},),
+                  ),onPressed: (){},),
                 )
               ],
             ),
@@ -220,8 +221,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+
             ///Header
-            Flexible(flex: 2,
+            Flexible(flex: 4,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -237,9 +239,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.all(40.0),
                     child: Row(
                       children: <Widget>[
-                        Text(strings["find"][language],style:white),
+                        //Text(strings["find"][language],style:white),
                         SizedBox(height: 40,
-                          child: Image.asset('images/playstore.png',),)
+                          child: IconButton(tooltip: (page==0&&language==0)?'Next':(page==0&&language==1)?'Suivant':(page>0&&language==0)?'Previous':"Précédent",
+                            icon: Icon((page<1)?Icons.arrow_forward_ios:Icons.arrow_back_ios),
+                          color: Colors.white,
+                          onPressed: (){
+                            if(page<1){setState(() {
+                              page=page+1;
+                            });}
+                            else{setState(() {
+                              page=0;
+                            });}
+                            (_controller.page==0)?
+                              _controller.nextPage(duration: Duration(seconds: 1), curve: Curves.linear):
+                            _controller.previousPage(duration: Duration(seconds: 1), curve: Curves.linear);
+                          },)
+
+                        )
                       ],
                     ),
                   ),
