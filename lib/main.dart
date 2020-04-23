@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:clay_containers/clay_containers.dart';
+import 'package:flutter/widgets.dart';
+import 'strings.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Manuel Guilbert',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'sun',
       ),
       home: MyHomePage(title: 'Manuel Guilbert'),
     );
@@ -32,7 +36,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextStyle white = TextStyle(color:Colors.white);
+  TextStyle white = TextStyle(color:Colors.grey[900],shadows: <Shadow>[
+  Shadow(
+  offset: Offset(0.0, 0.0,),
+      blurRadius: 0.0,
+  color:Colors.grey[800],
+  ),
+  ],);
   String screenType;
   Size screenSize;
   int language=0;
@@ -53,393 +63,476 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     Color buttonsColor=Colors.blue[500];
-    screenType = (MediaQuery.of(context).size.width<768)?"small":(MediaQuery.of(context).size.width<992)?"medium":"large";
+    screenType = (MediaQuery.of(context).size.width<1250)?"small":"large";
     screenSize = MediaQuery.of(context).size;
-    Map strings={
-      "find":<String>['Find my work on Google Playstore',"Trouvez moi sur Google Playstore"],
-      "hi":<String>["Hi, I'm Manuel Guilbert","Bonjour, je suis Manuel Guilbert"],
-      "description":<String>["a  creative and dynamic developer. \nI love working on mobile applications,\nproviding nice UI/UX and features.","un développeur créatif et dynamique. \nJe suis passionné par le développement d'applications,\net la création d'UI/UX et de fonctionnalités ergonomiques."],
-      "openSource":<String>["Open source projects are awesome\nand I sometimes contribute to them.","J'adore les projets Open Source\net j'y contribue parfois."],
-      "techs":<String>["My loved technologies and tools are :","Mes outils et technos préférés sont :"],
-      "travel":<String>["I had the chance to travel in some places\n and praticed languages a lot :\n","J'ai eu la chance de beaucoup voyager\n et de pratiquer les langues étrangères :\n"],
-      "frenchEnglish":<String>["French : native           English : fluent","Francais : natif           Anglais : courant"],
-      "spanish":<String>["Spanish: B2","Espagnol: B2"],
-      "talk":<String>["Lets talk :","Contactez moi :"]
-    };
 
 
 
-    Widget hello=ClayContainer(
-      width: 400,
-      color: Colors.grey[900],
-      surfaceColor: Colors.grey[900],
-      parentColor: Colors.grey[900],
-      borderRadius: 20,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    Widget thisIsMyFace(double textScaleFactor, double arrowWidth){
+      return Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Text(strings['face'][language],textScaleFactor: textScaleFactor,style: TextStyle(color: Colors.black),),
+              Text(strings['captcha'][language],textScaleFactor: textScaleFactor-0.5,style: TextStyle(color: Colors.black),textAlign: TextAlign.center,),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom:40.0),
+            child: Image.asset('images/arrowNextB.png',width: arrowWidth,)
+          ),
+
+        ],
+      );
+    }
+    Widget laptop(double size, double arrowHeight ,double textScaleFactor){
+      return Column(
           children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(strings['hi'][language],style:white),
-                SizedBox(height:70,width:70,child: CircleAvatar(backgroundColor: Colors.indigo,backgroundImage: AssetImage('images/me.jpg'),))
-              ],
-            ),
-            Text(strings['description'][language],style:white)
-          ],
-        ),
-      ),
-    );
+            Image.asset('images/macbook.png',width: size,),
+            Image.asset('images/arrowUp.png',height: arrowHeight,),
+            Text(strings['thisIsMyLaptop'][language],textScaleFactor: textScaleFactor,)
 
+          ]);
+    }
 
-    Widget gitHub=ClayContainer(
-      width: 400,
-      color: Colors.grey[900],
-      surfaceColor: Colors.grey[900],
-      parentColor: Colors.grey[900],
-      borderRadius: 20,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    Widget camera(double cameraWidth,double arrowWidth,bool mobile, double textScaleFactor){
+      return Column(
               children: <Widget>[
-                Text(strings["openSource"][language],style:white),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton(hoverColor: Colors.blue[700],
-                    shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.black),
+                Text(strings['thisIsMyCamera'][language],textScaleFactor: textScaleFactor,),
+            Padding(
+              padding: EdgeInsets.only(left:250),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('images/arrowNextDown.png',height: arrowWidth,),
+                  Padding(
+                    padding: const EdgeInsets.only(top:40.0),
+                    child: Image.asset('images/camera.png',width: cameraWidth,),
                   ),
-                    color: buttonsColor,child: Row(
-                    children: <Widget>[
-                      Image.asset('images/github.png',height: 20,),
-                      Text(' GitHub',style: white),
-                    ],
-                  ),onPressed: (){},),
-                )
-              ],
+                ],
+              ),
             ),
 
-          ],
-        ),
-      ),
-    );
-
-    Widget techs=ClayContainer(
-      width: 400,
-      color: Colors.grey[900],
-      surfaceColor: Colors.grey[900],
-      parentColor: Colors.grey[900],
-      borderRadius: 20,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(strings["techs"][language],style:white),
-            SizedBox(height: 10,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                FlutterLogo(size: 30,),
-                Image.asset("images/android.png",height: 30,),
-                Image.asset("images/firebase.png",height: 30,),
-                Image.asset("images/adobecc.png",height: 30,),
               ],
-            )
-          ],
-        ),
+      );
+    }
+Widget face(double size){
+  return
+  Stack(alignment: Alignment.center,
+    children: <Widget>[
+      Container(
+
+        padding: EdgeInsets.all(10),
+        height:size ,
+        width:size,
+        decoration: BoxDecoration(
+         // borderRadius: BorderRadius.all(Radius.circular(60)),
+          image: DecorationImage(image:AssetImage('images/me.jpg'),),
+          //boxShadow:[BoxShadow(color:Colors.white,spreadRadius: 3)],
+        ),),
+      Padding(
+        padding: const EdgeInsets.only(top:20.0),
+        child: InkWell(onTap: (){alertOuch(strings['ouch'][language]);},
+            child: Image.asset("images/pola.png",height:size+100)),
       ),
-    );
+    ],
+  );}
 
-    Widget trips=ClayContainer(
-      width: 400,
-      color: Colors.grey[900],
-      surfaceColor: Colors.grey[900],
-      parentColor: Colors.grey[900],
-      borderRadius: 20,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(strings["travel"][language],style:white),
-            Text(strings["frenchEnglish"][language],style:white),
-            Text(strings["spanish"][language],style:white),
-
-              ],
-            )
-      ),
-    );
-
-    Widget contact=ClayContainer(
-      width: 400,
-      color: Colors.grey[900],
-      surfaceColor: Colors.grey[900],
-      parentColor: Colors.grey[900],
-      borderRadius: 20,
-      child: Padding(
+    Widget developer(double size,double textScaleFactor){
+      return Container(
+        width: size,
+        child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(strings["talk"][language],style:white),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(hoverColor: Colors.blue[700],
-                    shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.black),
-                  ),color: buttonsColor,child: Icon(Icons.email,color: Colors.white,size: 25,),onPressed: (){},),
-                  RaisedButton(hoverColor: Colors.blue[700],
-                      shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.black),
-                  ),color: buttonsColor,child: Image.asset('images/linkedin.png',height: 25,),onPressed: (){})
-                ],
+              Text(strings['description'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+              Image.asset('images/line.png'),
+            ],
+          ),
+        ),
+      );}
 
-              )
+    Widget teacher(double size, double textScaleFactor){
+      return Container(
+        width: size,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(strings['teacher'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+              Image.asset('images/line.png'),
+            ],
+          ),
+        ),
+      );}
+
+    Widget more(double size,double textScaleFactor){
+      return Container(
+        width: size,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(strings['more'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+              Image.asset('images/line.png'),
+            ],
+          ),
+        ),
+      );}
+
+    Widget hello(double size,double textScaleFactor){
+      return Container(
+        width: size,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(strings['hi'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+              Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(strings['im'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+                  Text(strings['name'][language],style:white,textScaleFactor: textScaleFactor+0.6,textAlign: TextAlign.center,),
+                ],
+              ),
+
+              Image.asset('images/line.png'),
+            ],
+          ),
+        ),
+      );}
+
+
+      Widget gitHub(double size,double textScaleFactor){
+      return Container(
+        width: size,
+        color: Colors.grey[900],
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(strings["openSource"][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+                  SizedBox(width: 160,
+                    child: RaisedButton(hoverColor: Colors.blue[700],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.black),
+                      ),
+                      color: buttonsColor,child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset('images/github.png',height: 20,),
+                          Text(' GitHub',style: white),
+                        ],
+                      ),onPressed: (){},),
+                  )
+                ],
+              ),
 
             ],
-          )
-      ),
-    );
+          ),
+        ),
+      );}
 
-
-
-
-
-    return Scaffold(
-      body: Container(
-        height: screenSize.height,
-        width: screenSize.width,
+      Widget techs(double size,double textScaleFactor){
+      return Container(
+        width: 400,
         color: Colors.grey[900],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-
-            ///Header
-            Flexible(flex: 4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(strings["techs"][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+              SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top:0.0,left:40),
-                    child: Text('manuelguilbert',style:white),
-                  ),
-
-
-
-
-                  Padding(
-                    padding: const EdgeInsets.all(40.0),
-                    child: Row(
-                      children: <Widget>[
-                        //Text(strings["find"][language],style:white),
-                        SizedBox(height: 40,
-                          child: IconButton(tooltip: (page==0&&language==0)?'Next':(page==0&&language==1)?'Suivant':(page>0&&language==0)?'Previous':"Précédent",
-                            icon: Icon((page<1)?Icons.arrow_forward_ios:Icons.arrow_back_ios),
-                          color: Colors.white,
-                          onPressed: (){
-                            if(page<1){setState(() {
-                              page=page+1;
-                            });}
-                            else{setState(() {
-                              page=0;
-                            });}
-                            (_controller.page==0)?
-                              _controller.nextPage(duration: Duration(seconds: 1), curve: Curves.linear):
-                            _controller.previousPage(duration: Duration(seconds: 1), curve: Curves.linear);
-                          },)
-
-                        )
-                      ],
-                    ),
-                  ),
+                  FlutterLogo(size: 30,),
+                  Image.asset("images/android.png",height: 30,),
+                  Image.asset("images/firebase.png",height: 30,),
+                  Image.asset("images/adobecc.png",height: 30,),
                 ],
-              ),
-            ),
-            ///Body
-            Flexible(flex:12,
-              child: PageView(controller: _controller,
-                children: <Widget>[
-                  SingleChildScrollView(
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(30.0),
-                        child: Center(child:Column(
-                          children:(screenType=='small'||screenType=='medium')? <Widget>[
-                            hello,
-                            SizedBox(height: 20,),
-                            gitHub,
-                            SizedBox(height: 20,),
-                            techs,
-                            SizedBox(height: 20,),
-                            trips,
-                            SizedBox(height: 20,),
-                            contact,
-                          ]
-                              :
-                          <Widget>[
-                            Row(mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(children: <Widget>[
-                                  hello,
-                                  SizedBox(height: 30,),
-                                  trips
-                                ],),
-                                SizedBox(width: 30,),
-                                Column(children: <Widget>[
-                                  gitHub,
-                                  SizedBox(height: 30,),
-                                  techs,
-                                  SizedBox(height: 30,),
-                                  contact,
+              )
+            ],
+          ),
+        ),
+      );}
+
+      Widget trips(double size,double textScaleFactor){
+      Container(
+        width: 400,
+        color: Colors.grey[900],
+        child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(strings["travel"][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+                Text(strings["frenchEnglish"][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+                Text(strings["spanish"][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+
+              ],
+            )
+        ),
+      );}
+
+      Widget contact(double size,double textScaleFactor){
+      return Container(
+        width: 400,
+        color: Colors.grey[900],
+        child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(strings["talk"][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    RaisedButton(hoverColor: Colors.blue[700],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.black),
+                      ),color: buttonsColor,child: Icon(Icons.email,color: Colors.white,size: 25,),onPressed: (){},),
+                    RaisedButton(hoverColor: Colors.blue[700],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(18.0),
+                          side: BorderSide(color: Colors.black),
+                        ),color: buttonsColor,child: Image.asset('images/linkedin.png',height: 25,),onPressed: (){})
+                  ],
+
+                )
+
+              ],
+            )
+        ),
+      );}
+
+
+
+
+
+      return Scaffold(
+        body: Container(
+          height: screenSize.height,
+          width: screenSize.width,
+          color: Colors.grey[100],
+          child: Stack(
+            children: <Widget>[
+              Positioned(child:Container( height: screenSize.height,
+                  width: screenSize.width,child: Image.asset("images/dots.png",repeat: ImageRepeat.repeat,))),
+              Positioned(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+
+
+
+
+                    ///Body
+
+
+                    Flexible(flex:14,
+                      child: PageView(controller: _controller,
+                        children: <Widget>[
+
+                          ///Page1
+                          ///DESKTOP
+                          (screenType=="large")?
+                          Stack(alignment: Alignment.center,
+                            children: <Widget>[
+                              Positioned(child: (screenSize.width>1600)?Image.asset('images/pens.png',width: 300,):Container()),
+                              Positioned(right:0,top:0, child: Image.asset('images/randomShape.png')),
+                              Positioned(top:20,left:500,child: laptop(150,150,2.0)),
+                              Positioned(bottom: 150,left:450,child: camera(80, 100,false, 2.0)),
+
+
+                              Positioned(bottom:10,right:20,child: Row(
+                                children: <Widget>[
+                                  more(300,3),
+                                  Stack(alignment: Alignment.center,
+                                    children: <Widget>[
+                                      Image.asset('images/nextBig.png',width: 180,),
+                                      Text(strings["thisWay"][language],textScaleFactor: 2.0,)
+                                    ],
+                                  )
                                 ],
+                              )),
+                              Positioned(right:0,top:0, child: Row(children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(top:100.0),
+                                  child: thisIsMyFace(1.7, 100),
+                                ),face(300)],)),
+                              Positioned(left: (language==0)?screenSize.width/20:screenSize.width/100,
+                                child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    hello((language==0)?400:450,(language==0)?3:2.5),
+                                    developer((language==0)?400:500,(language==0)?3:2.5),
+                                    teacher((language==0)?400:500,(language==0)?3:2.5),
 
-                                )
-                              ],)
 
-                          ],
-                        )),
-                      ),
-                    ),
-                  ),//Page1
-                  SingleChildScrollView(
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Center(child:Column(
-                          children:(screenType=='small'||screenType=='medium')? <Widget>[
-                            hello,
-                            SizedBox(height: 20,),
-                            gitHub,
-                            SizedBox(height: 20,),
-                            techs,
-                            SizedBox(height: 20,),
-                            trips,
-                            SizedBox(height: 20,),
-                            contact,
-                          ]
-                              :
-                          <Widget>[
-                            Row(mainAxisAlignment: MainAxisAlignment.center,
+                                  ],
+                                ),
+                              ),
+                             // Positioned(bottom:160,left:180,child: developer(300)),
+                             // Positioned(bottom:0,left:180,child: teacher(300)),
+
+
+                            ],
+                          ):///Page1
+                          ///MOBILE
+                          SingleChildScrollView(
+                            child: Stack(alignment: Alignment.topRight,
                               children: <Widget>[
-                                Column(children: <Widget>[
-                                  hello,
-                                  SizedBox(height: 30,),
-                                  trips
-                                ],),
-                                SizedBox(width: 30,),
-                                Column(children: <Widget>[
-                                  gitHub,
-                                  SizedBox(height: 30,),
-                                  techs,
-                                  SizedBox(height: 30,),
-                                  contact,
-                                ],
+                                Positioned(top:0,right:0,child: Image.asset('images/randomShape.png',width: 500,)),
+                                Column(
+                                  children: <Widget>[
+                                    SizedBox(height: 20,),
+                                    hello(500, 2.0),
+                                    Column(mainAxisAlignment:MainAxisAlignment.center,children : <Widget>[
 
-                                )
-                              ],)
+                                      face(200),
+                                      thisIsMyFace(2.0, 0),
+                                    ]),
 
-                          ],
-                        )),
-                      ),
-                    ),
-                  ),//Page2
-                ],
-              ),
-            ),
-
-            ///Footer
-            Flexible(flex:2,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(right: 20,bottom: 20,
-                    child:_languageItemPopup() ,),
-                  Positioned(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Text('Lille, France',style:white),
-                            Row(
-                              children: <Widget>[
-                                FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(100.0),
-                                  ),
-                                  color:Colors.transparent,
-                                  hoverColor: Colors.grey[850],
-                                  onPressed:() {//goGithHub
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset('images/github.png',height: 40,),
-                                  ),
-                                ),
-                                FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(100.0),
-                                  ),
-                                  color:Colors.transparent,
-                                  hoverColor: Colors.grey[850],
-                                  onPressed:() {//goLinkedIn
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset('images/500px.png',height: 40,),
-                                  ),
-                                ),
-                                FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(100.0),
-                                  ),
-                                  color:Colors.transparent,
-                                  hoverColor: Colors.grey[850],
-                                  onPressed:() {//goDribbble
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset('images/dribbble.png',height: 40,),
-                                  ),
-                                ),
-                                FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(100.0),
-                                  ),
-                                  color:Colors.transparent,
-                                  hoverColor: Colors.grey[850],
-                                  onPressed:() {//goPlaystore
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset('images/playstore.png',height: 40,),
-                                  ),
+                                    developer(500, 2.0),
+                                    teacher(500, 2.0),
+                                    Row(
+                                      mainAxisAlignment:MainAxisAlignment.center,
+                                      children: <Widget>[
+                                      more(200, 2.0),Stack(alignment: Alignment.center,
+                                        children: <Widget>[
+                                          Image.asset('images/nextBig.png',width: 160,),
+                                          Padding(
+                                            padding: const EdgeInsets.only(bottom:5.0),
+                                            child: Text(strings["thisWay"][language],textScaleFactor: 2.0,),
+                                          )
+                                        ],
+                                      )
+                                    ],)
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ],
+                          )
+                          //Todo small screentype display
+
+
+
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+
+                    ///DESKTOP Footer
+                    Flexible(flex:2,
+                      child: (screenType!="small")?Stack(
+                        children: <Widget>[
+                          Positioned(right: 20,bottom: 20,
+                            child:_languageItemPopup() ,),
+                          Positioned(right: 200,bottom: 0,
+                            child:Image.asset("images/pen.png",height: 70,) ,),
+                          Positioned(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Text('Lille, France',style:white,textScaleFactor: 1.4,),
+                                    Row(
+                                      children: <Widget>[
+                                        FlatButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.circular(100.0),
+                                          ),
+                                          color:Colors.transparent,
+                                          hoverColor: Colors.blue[300],
+                                          onPressed:() {//goGithHub
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Image.asset('images/githubB.png',height: 40,),
+                                          ),
+                                        ),
+                                        FlatButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.circular(100.0),
+                                          ),
+                                          color:Colors.transparent,
+                                          hoverColor: Colors.blue[300],
+                                          onPressed:() {//goLinkedIn
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Image.asset('images/500px.png',height: 40,),
+                                          ),
+                                        ),
+                                        FlatButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.circular(100.0),
+                                          ),
+                                          color:Colors.transparent,
+                                          hoverColor: Colors.blue[300],
+                                          onPressed:() {//goDribbble
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Image.asset('images/dribbble.png',height: 40,),
+                                          ),
+                                        ),
+                                        FlatButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: new BorderRadius.circular(100.0),
+                                          ),
+                                          color:Colors.transparent,
+                                          hoverColor: Colors.blue[300],
+                                          onPressed:() {//goPlaystore
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Image.asset('images/playstore.png',height: 40,),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ):
+
+///MOBILE FOOTER
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          InkWell(child: Image.asset('images/githubB.png',width: 50,),onTap: (){_launchURL('https://github.com/mnlglbrt');},),//goGitHub
+                          InkWell(child: Image.asset('images/500px.png',width: 50),onTap: (){_launchURL('https://500px.com/mg_photos');},),//goGitHub
+                          InkWell(child: Image.asset('images/dribbble.png',width: 50),onTap: (){_launchURL('https://dribbble.com/manu101292');},),//goGitHub
+                          InkWell(child: Image.asset('images/playstore.png',width: 50),onTap: (){_launchURL('https://play.google.com/store/apps/developer?id=App+Atlas');},),//goGitHub
+                          _languageItemPopup()
+                        ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
+    }
+
 
   Widget _languageItemPopup() => PopupMenuButton(
-    color: Colors.grey[900],
+    color: Colors.white,
     tooltip: "Language",
     itemBuilder: (context) {
       var list = List<PopupMenuEntry<Object>>();
@@ -447,7 +540,7 @@ class _MyHomePageState extends State<MyHomePage> {
         CheckedPopupMenuItem(
           child: Text(
             "English",
-            style: white
+            style: TextStyle(color: Colors.blue)
           ),
           value: 0,
 
@@ -457,7 +550,7 @@ class _MyHomePageState extends State<MyHomePage> {
         CheckedPopupMenuItem(
           child: Text(
             "Français",
-            style: white
+            style: TextStyle(color: Colors.blue)
           ),
           value: 1,
 
@@ -474,9 +567,40 @@ class _MyHomePageState extends State<MyHomePage> {
     icon: Icon(
       Icons.language,
       size: 30,
-      color: Colors.white,
+      color: (screenType=='small')?Colors.black:Colors.deepOrange,
     ),
   );
+
+  Future<void> _makePhoneCall(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  void alertOuch(String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          //title: new Text("Alert Dialog title"),
+          content: new Text(content,textScaleFactor: 4,),
+
+        );
+      },
+    );
+  }
+
+  _launchURL(String destination) async {
+    String url = destination;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
 }
 

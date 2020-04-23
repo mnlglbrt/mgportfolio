@@ -17,7 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  clay_containers: ^0.2.2
+  url_launcher: ^5.4.5
   flutter:
     sdk: flutter
 
@@ -35,6 +35,11 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: sun
+      fonts:
+        - asset: fonts/sun.otf
+
   assets:
     - images/
 
