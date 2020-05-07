@@ -17,6 +17,11 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  video_player: ^0.10.9+1
+  flip_card: ^0.4.4
+  clay_containers: ^0.2.2
+  max_size_text: ^1.0.10
+  auto_size_text: ^2.1.0
   url_launcher: ^5.4.5
   flutter:
     sdk: flutter
@@ -39,6 +44,9 @@ flutter:
     - family: sun
       fonts:
         - asset: fonts/sun.otf
+    - family: school
+      fonts:
+        - asset: fonts/school.ttf
 
   assets:
     - images/
