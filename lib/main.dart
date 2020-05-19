@@ -105,7 +105,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Text(strings['hi'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
+              (language==0)?Row(mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(strings['im'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+                  Text(strings['name'][language],style:white,textScaleFactor: textScaleFactor+0.6,textAlign: TextAlign.center,),
+                ],
+              ):
+              Column(mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(strings['im'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
                   Text(strings['name'][language],style:white,textScaleFactor: textScaleFactor+0.6,textAlign: TextAlign.center,),
@@ -123,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
           Column(
             children: <Widget>[
               Text(strings['face'][language],textScaleFactor: textScaleFactor,style: TextStyle(color: Colors.black),),
-              Text(strings['captcha'][language],textScaleFactor: textScaleFactor-0.5,style: TextStyle(color: Colors.black),textAlign: TextAlign.center,),
+              Text(strings['captcha'][language],textScaleFactor: textScaleFactor-0.3,style: TextStyle(color: Colors.black),textAlign: TextAlign.center,),
             ],
           ),
           Padding(
@@ -321,7 +327,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(strings['description'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+              Text(strings['description'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.justify,),
               Image.asset('images/line.png'),
             ],
           ),
@@ -336,7 +342,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(strings['teacher'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
+              Text(strings['teacher'][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.justify,),
               Image.asset('images/line.png'),
             ],
           ),
@@ -440,16 +446,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                 Text(strings["talk"][language],style:white,textScaleFactor: textScaleFactor,textAlign: TextAlign.center,),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    RaisedButton(hoverColor: Colors.blue[700],
+                    /*RaisedButton(hoverColor: Colors.blue[700],
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.black),
-                      ),color: buttonsColor,child: Icon(Icons.email,color: Colors.white,size: 25,),onPressed: (){},),
+                      ),color: buttonsColor,child: Icon(Icons.email,color: Colors.white,size: 25,),onPressed: (){_launchURL('mailto:smith@example.org?subject=News&body=New%20plugin');},),*/
                     RaisedButton(hoverColor: Colors.blue[700],
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(18.0),
                           side: BorderSide(color: Colors.black),
-                        ),color: buttonsColor,child: Image.asset('images/linkedin.png',height: 25,),onPressed: (){})
+                        ),color: buttonsColor,child: Image.asset('images/linkedin.png',height: 25,),onPressed: (){_launchURL('https://www.linkedin.com/in/manuel-guilbert-a088a8125/');})
                   ],
 
                 )
@@ -470,8 +476,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
           color: Colors.grey[100],
           child: Stack(
             children: <Widget>[
-              Positioned(child:Container( height: screenSize.height,
-                  width: screenSize.width,child: Image.asset("images/dots.png",repeat: ImageRepeat.repeat,))),
+
               Positioned(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -556,11 +561,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                                     Row(
                                       mainAxisAlignment:MainAxisAlignment.center,
                                       children: <Widget>[
-                                      more(250, 2.0),
+                                      more(200, 1.5),
                                         InkWell(onTap:(){_controller.animateToPage(1,duration: Duration(seconds: 1),curve:Curves.decelerate);} ,
                                           child: Stack(alignment: Alignment.center,
                                           children: <Widget>[
-                                            Image.asset('images/nextBig.png',width: 160,),
+                                            Image.asset('images/nextBig.png',width: 100,),
                                             Padding(
                                               padding: const EdgeInsets.only(bottom:5.0),
                                               child: Text(strings["thisWay"][language],textScaleFactor: 1.5,),
@@ -579,10 +584,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                           (screenType=="large")?
                           Stack(alignment: Alignment.center,
                             children: <Widget>[
-
-                              //Todo page 2 display
                               Positioned(left:0,top:0, child: Image.asset('images/randomShape2.png')),
-                                  Positioned(left:50,top:20,
+                              Positioned(left:50,bottom:0, child: Image.asset('images/foregroundTT.png',width: 300,fit:BoxFit.fill)),
+
+                              Positioned(left:50,top:20,
                                     child:Container(
                                       width: 380,
                                       child: Padding(
@@ -590,89 +595,119 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                                         child: Text(strings['tt1'][language],textScaleFactor: 2.0,style:TextStyle(color:Colors.white),textAlign: TextAlign.center),
                                       )),),
 
-                              Positioned(left:100,top:240,
-                                       child: Container(height:390,decoration: BoxDecoration(image:DecorationImage(image:AssetImage("images/postit.png")),),
-                                         child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                                             children:<Widget>[
-                                               Container(width:500,
-                                                 child: SingleChildScrollView(
-                                                   child: Padding(
-                                                     padding: const EdgeInsets.only(left:80.0,right: 80),
-                                                     child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                       children: <Widget>[
-                                                         Padding(
-                                                           padding: const EdgeInsets.only(bottom:10.0),
-                                                           child: Text(strings['tt2'][language],textScaleFactor: 1.5,textAlign: TextAlign.center),
+                              Positioned(left:60,top:180,
+                                child: Container(height: 200,
+                                  child:Column(mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Text(strings['tt0'][language],textScaleFactor:2.0,style: TextStyle(color: Colors.black),),
+                                          Text("ThymTrack",textScaleFactor:2.3,style: TextStyle(color: Colors.white,fontFamily: 'dot'),),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left:220.0),
+                                        child: Image.asset('images/arrowNextDown.png',width: 170,),
+                                      ),
+
+                                    ],
+                                  )
+                                ),
+                              ),
+
+
+                                   Positioned(left:480,
+                                     child: Row(
+                                       children: <Widget>[
+                                         Container(
+                                           height:556,
+                                           width:265,
+                                           child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                                               children:<Widget>[
+                                                 Stack(alignment: Alignment.center,
+                                                     children: <Widget>[
+                                                       Image.asset('images/device.png',fit: BoxFit.contain),
+                                                       _videoController.value.initialized
+                                                           ? Padding(
+                                                         padding: const EdgeInsets.all(0.0),
+                                                         child: AspectRatio(
+                                                           aspectRatio: 1/1.85,
+                                                           child: VideoPlayer(_videoController),
                                                          ),
-                                                         Text(strings['tt3'][language],textScaleFactor: 1.5,textAlign: TextAlign.center)
-                                                       ],
-                                                     ),
-                                                   ),
-                                                 ),
-                                               ),
-                                             ]),
-                                       ),
-                                  ),
+                                                       )
+                                                           : Container(),
 
 
+                                                       AnimatedOpacity(opacity: thymtrackLogoOpacity,
+                                                         duration: Duration(milliseconds: 500),
+                                                         child: Container(child:InkWell(
+                                                             onTap:  () {
+                                                               setState(() {
+                                                                 thymtrackLogoOpacity=0.0;
+                                                                 _videoController.value.isPlaying
+                                                                     ? _videoController.pause()
+                                                                     : _videoController.play();
+                                                               });
+                                                             },
+                                                             child: Stack(alignment: Alignment.center,
+                                                               children: <Widget>[
+                                                                 Image.asset('images/device.png',fit: BoxFit.contain),
+                                                                 Image.asset('images/logoTT.png',height: 100,),
 
-                                   Positioned(left:700,
-                                     child: Container(
-                                       height:556,
-                                       width:265,
-                                       child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                                           children:<Widget>[
-                                             Stack(alignment: Alignment.center,
-                                                 children: <Widget>[
-                                                   Image.asset('images/device.png',fit: BoxFit.contain),
-                                                   _videoController.value.initialized
-                                                       ? Padding(
-                                                     padding: const EdgeInsets.all(0.0),
-                                                     child: AspectRatio(
-                                                       aspectRatio: 1/1.85,
-                                                       child: VideoPlayer(_videoController),
-                                                     ),
-                                                   )
-                                                       : Container(),
+                                                               ],
+                                                             )),
+                                                         ),
+                                                       ),
+                                                     ])
+                                               ]),
+                                         ),
+                                         Padding(
+                                           padding: const EdgeInsets.only(left:8.0),
+                                           child: Container(width: 130,
+                                             child: Column(children: <Widget>[
+                                               Text(strings['tt2'][language],textScaleFactor:1.35,textAlign: TextAlign.justify,),
+                                               Text(strings['tt3'][language],textScaleFactor:1.35,textAlign: TextAlign.justify),
+                                             ],),
 
-
-                                                   AnimatedOpacity(opacity: thymtrackLogoOpacity,
-                                                     duration: Duration(milliseconds: 500),
-                                                     child: Container(child:InkWell(
-                                                         onTap:  () {
-                                                           setState(() {
-                                                             thymtrackLogoOpacity=0.0;
-                                                             _videoController.value.isPlaying
-                                                                 ? _videoController.pause()
-                                                                 : _videoController.play();
-                                                           });
-                                                         },
-                                                         child: Stack(alignment: Alignment.center,
-                                                           children: <Widget>[
-                                                             Image.asset('images/device.png',fit: BoxFit.contain),
-                                                             Image.asset('images/logoTT.png',height: 70,),
-
-                                                           ],
-                                                         )),
-                                                     ),
-                                                   ),
-                                                 ])
-                                           ]),
+                                           ),
+                                         ),
+                                       ],
                                      ),
                                    ),
 
 
-                              Positioned(right:100,
-                                child:Container(height:600,
-                                  child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              Positioned(right:190,top:120,
+                                child: Container(
+                                    child:Column(mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(strings['another'][language],textScaleFactor:1.5,style: TextStyle(color: Colors.black),),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left:220.0),
+                                          child: Image.asset('images/arrowNextDown.png',width: 120,),
+                                        ),
+                                        SizedBox(height: 140),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left:220.0),
+                                          child: Image.asset('images/arrowNextB.png',width: 120,),
+                                        ),
+                                        Text(strings['anotherOne'][language],textScaleFactor:1.5,style: TextStyle(color: Colors.black),),
+                                      ],
+                                    )
+                                ),
+                              ),
+
+                              Positioned(right:70,top:150,
+                                child:Container(
+                                  child: Column(mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       InkWell(
                                         onTap:(){_launchURL('https://play.google.com/store/apps/details?id=com.appatlas.dice_it');},
-                                        child:Image.asset("images/rod.png",height:80),
+                                        child:Image.asset("images/rod.png",height:100),
                                       ),
+                                      SizedBox(height: 70,),
                                       InkWell(
                                         onTap:(){_launchURL('https://play.google.com/store/apps/details?id=com.mgdev.led_lamp');},
-                                        child:Image.asset("images/bulb.png",height:63),
+                                        child:Image.asset("images/bulb.png",height:83),
                                       )
                                     ],
 
@@ -680,8 +715,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                                 )
                               ),
 
+                              Positioned(bottom:10,right:20,child: Row(
+                                children: <Widget>[
+                                  contact(300,2.0),
 
-
+                                ],
+                              )),
 
 
 
@@ -691,66 +730,114 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                           ):///Page2
                           ///MOBILE
                           SingleChildScrollView(
-                            child: Column(
+                            child: Stack(alignment: Alignment.topLeft,
                               children: <Widget>[
-                              Container(
+                                Positioned(child: Image.asset('images/randomShape2.png')),
+                                Column(
+                                  children: <Widget>[
+                                  Container(
 
-                              width: 350,
-                              child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                                  children:<Widget>[
-                                    Text(strings['tt1'][language],textScaleFactor: 2.0,textAlign: TextAlign.center,)
-                                  ]),
-                            ),
-
-                                Container(
-                                  height:556,
-                                  width:265,
-                                  child: Column(mainAxisAlignment: MainAxisAlignment.start,
-                                      children:<Widget>[
-                                        Stack(alignment: Alignment.center,
-                                            children: <Widget>[
-                                              Image.asset('images/device.png',fit: BoxFit.contain),
-                                              _videoController.value.initialized
-                                                  ? Padding(
-                                                padding: const EdgeInsets.all(0.0),
-                                                child: AspectRatio(
-                                                  aspectRatio: 1/1.85,
-                                                  child: VideoPlayer(_videoController),
-                                                ),
-                                              )
-                                                  : Container(),
-
-
-                                              AnimatedOpacity(opacity: thymtrackLogoOpacity,
-                                                duration: Duration(milliseconds: 500),
-                                                child: Container(child:InkWell(
-                                                    onTap:  () {
-                                                      setState(() {
-                                                        thymtrackLogoOpacity=0.0;
-                                                        _videoController.value.isPlaying
-                                                            ? _videoController.pause()
-                                                            : _videoController.play();
-                                                      });
-                                                    },
-                                                    child: Stack(alignment: Alignment.center,
-                                                      children: <Widget>[
-                                                        Image.asset('images/device.png',fit: BoxFit.contain),
-                                                        Image.asset('images/logoTT.png',height: 70,),
-
-                                                      ],
-                                                    )),
-                                                ),
-                                              ),
-                                            ])
-                                      ]),
-                                ),
-
-                                Container(
                                   width: 350,
                                   child: Column(mainAxisAlignment: MainAxisAlignment.start,
                                       children:<Widget>[
-                                        Text(strings['tt2'][language],textScaleFactor: 2.0,)
+                                        Text(strings['tt1'][language],textScaleFactor: 2.0,textAlign: TextAlign.center,)
                                       ]),
+                                ),
+
+                                    Container(
+                                      height:556,
+                                      width:265,
+                                      child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                                          children:<Widget>[
+                                            Stack(alignment: Alignment.center,
+                                                children: <Widget>[
+                                                  Image.asset('images/device.png',fit: BoxFit.contain),
+                                                  _videoController.value.initialized
+                                                      ? Padding(
+                                                    padding: const EdgeInsets.all(0.0),
+                                                    child: AspectRatio(
+                                                      aspectRatio: 1/1.85,
+                                                      child: VideoPlayer(_videoController),
+                                                    ),
+                                                  )
+                                                      : Container(),
+
+
+                                                  AnimatedOpacity(opacity: thymtrackLogoOpacity,
+                                                    duration: Duration(milliseconds: 500),
+                                                    child: Container(child:InkWell(
+                                                        onTap:  () {
+                                                          setState(() {
+                                                            thymtrackLogoOpacity=0.0;
+                                                            _videoController.value.isPlaying
+                                                                ? _videoController.pause()
+                                                                : _videoController.play();
+                                                          });
+                                                        },
+                                                        child: Stack(alignment: Alignment.center,
+                                                          children: <Widget>[
+                                                            Image.asset('images/device.png',fit: BoxFit.contain),
+                                                            Image.asset('images/logoTT.png',height: 70,),
+
+                                                          ],
+                                                        )),
+                                                    ),
+                                                  ),
+                                                ])
+                                          ]),
+                                    ),
+
+                                    Container(
+                                      width: 350,
+                                      child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                                          children:<Widget>[
+                                            Text(strings['tt2'][language],textScaleFactor: 2.0,)
+                                          ]),
+                                    ),
+                                    SizedBox(height: 50),
+                                    Row(mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                            child:Column(mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text(strings['another'][language],textScaleFactor:1.5,style: TextStyle(color: Colors.black),),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left:20.0),
+                                                  child: Image.asset('images/arrowNextDown.png',width: 120,),
+                                                ),
+                                                SizedBox(height: 140),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left:20.0),
+                                                  child: Image.asset('images/arrowNextB.png',width: 120,),
+                                                ),
+                                                Text(strings['anotherOne'][language],textScaleFactor:1.5,style: TextStyle(color: Colors.black),),
+                                              ],
+                                            )
+                                        ),
+                                        Container(
+                                            child:Container(
+                                              child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  InkWell(
+                                                    onTap:(){_launchURL('https://play.google.com/store/apps/details?id=com.appatlas.dice_it');},
+                                                    child:Image.asset("images/rod.png",height:100),
+                                                  ),
+                                                  SizedBox(height: 70,),
+                                                  InkWell(
+                                                    onTap:(){_launchURL('https://play.google.com/store/apps/details?id=com.mgdev.led_lamp');},
+                                                    child:Image.asset("images/bulb.png",height:83),
+                                                  )
+                                                ],
+
+                                              ),
+                                            )
+                                        ),
+                                      ],
+                                    ),
+
+                                    contact(300,1.8)
+
+                                  ],
                                 ),
                               ],
                             )
@@ -790,7 +877,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                                           ),
                                           color:Colors.transparent,
                                           hoverColor: Colors.blue[300],
-                                          onPressed:() {//goGithHub
+                                          onPressed:() {_launchURL('https://github.com/mnlglbrt');
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
@@ -803,7 +890,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                                           ),
                                           color:Colors.transparent,
                                           hoverColor: Colors.blue[300],
-                                          onPressed:() {//goLinkedIn
+                                          onPressed:() {_launchURL('https://500px.com/mg_photos');
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
@@ -816,7 +903,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                                           ),
                                           color:Colors.transparent,
                                           hoverColor: Colors.blue[300],
-                                          onPressed:() {//goDribbble
+                                          onPressed:() {_launchURL('https://dribbble.com/manu101292');
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
@@ -829,7 +916,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                                           ),
                                           color:Colors.transparent,
                                           hoverColor: Colors.blue[300],
-                                          onPressed:() {//goPlaystore
+                                          onPressed:() {_launchURL('https://play.google.com/store/apps/developer?id=App+Atlas');
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(10.0),
@@ -906,7 +993,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
     icon: Icon(
       Icons.language,
       size: 30,
-      color: (screenType=='small')?Colors.black:Colors.deepOrange,
+      color: (screenType=='small')?Colors.blue:Colors.blue,
     ),
   );
 

@@ -47,6 +47,9 @@ flutter:
     - family: school
       fonts:
         - asset: fonts/school.ttf
+    - family: dot
+      fonts:
+        - asset: fonts/dot.ttf
 
   assets:
     - images/
